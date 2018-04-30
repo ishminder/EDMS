@@ -1,7 +1,7 @@
-package com.EBMS.AccessingDao;
+package com.EDMS.AccessingDao;
 
-import com.EBMS.Dao.UserDao;
-
+import com.EBMS.Dao.StudentDao;
+import com.KPSCampusCare.bean.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,34 +13,27 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Ish
  */
-public class UserRegistration extends HttpServlet {
+public class AdminRegistration extends HttpServlet {
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String studentId = request.getParameter("studentid");
-        String fatherName = request.getParameter("fatherName");
-        String motherName = request.getParameter("motherName");
+        String name = request.getParameter("name");
         String email = request.getParameter("email");
-        String userName = request.getParameter("username");
+        String admissNo = request.getParameter("admissNo");
         String phone = request.getParameter("phone");
-        String password = request.getParameter("password");
-
         String address = request.getParameter("address");
-
-        Parents s = new Parents();
-
-        s.setFather_name(fatherName);
-        s.setMother_name(motherName);
-        s.setPhone(phone);
-        s.setStudent_id(Integer.parseInt(studentId));
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        String password = request.getParameter("password");
+        Student s = new Student();
+        s.setName(name);
+        s.setAddress(address);
+        s.setClassId(classId);
+        s.setEmail(email);
         s.setPassword(password);
-        s.setUserName(userName);
-        s.setEmail_id(email);
-
-        int rowsEffected = ParentsDao.register(s);
-        System.out.println("Registered!!\n");
+        s.setPhone(phone);
+        s.setAdmiss_no(Integer.parseInt(admissNo));
+        int rowsEffected = StudentDao.register(s);
         if (rowsEffected > 0) {
             response.sendRedirect(request.getContextPath() + "/frontpage.jsp");
         } else {

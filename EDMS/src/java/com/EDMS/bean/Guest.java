@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.EBMS.bean;
+package com.EDMS.bean;
 
 /**
  *
  * @author Ish
  */
-public class User {
+public class Guest {
     
 }

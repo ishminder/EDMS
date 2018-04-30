@@ -1,4 +1,4 @@
-package com.EBMS.bean;
+package com.EDMS.bean;
 
 /**
  *
@@ -7,7 +7,7 @@ package com.EBMS.bean;
 public interface Provider {
 
     String DRIVER = "com.mysql.jdbc.Driver";
-    String CONNECTION_URL = "jdbc:mysql://localhost:3306/schooldb";
+    String CONNECTION_URL = "jdbc:mysql://localhost:3306/edms";
     String USERNAME = "root";
     String PASSWORD = "root";
 }

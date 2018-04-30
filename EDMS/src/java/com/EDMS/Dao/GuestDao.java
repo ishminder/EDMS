@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.EBMS.Dao;
+package com.EDMS.Dao;
 
 /**
  *
  * @author Ish
  */
-public class UserDao {
+public class GuestDao {
     
 }

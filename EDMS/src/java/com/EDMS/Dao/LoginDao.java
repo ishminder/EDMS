@@ -1,27 +1,28 @@
-package com.EBMS.Dao;
+package com.EDMS.Dao;
 
-import com.EBMS.bean.ConnectionProvider;
-import com.EBMS.bean.Login;
+import com.EDMS.bean.ConnectionProvider;
+import com.EDMS.bean.Login;
 import java.sql.*;
 
 public class LoginDao {
 
-    public static String loginCheck(Login l) {
+    public static int loginCheck(Login l) {
         ResultSet rs;
-        String name;
-        name = null;
+      
+        int level;
+       level=0;
         Connection con = null;
         try {
             con = ConnectionProvider.getCon();
 
-            PreparedStatement ps = con.prepareStatement("select name from " + l.getUserType() + " where email=? and password=? ;");
+            PreparedStatement ps = con.prepareStatement("select level from user where userid=? and passwd=? ;");
 
-            ps.setString(1, l.getEmail());
+            ps.setString(1, l.getName());
             ps.setString(2, l.getPassword());
 
             rs = ps.executeQuery();
             if (rs.next()) {
-                name = rs.getString("name");
+                level = rs.getInt("level");
             }
 
         } catch (Exception e) {
@@ -37,6 +38,6 @@ public class LoginDao {
             }
 
         }
-        return name;
+        return level;
     }
 }

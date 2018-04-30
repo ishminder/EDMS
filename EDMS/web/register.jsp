@@ -1,4 +1,11 @@
- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html dir="ltr"><head>
+<%-- 
+    Document   : register
+    Created on : 30 Apr, 2018, 12:40:52 PM
+    Author     : Ish
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html dir="ltr"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <!-- no cache headers -->
@@ -7,7 +14,7 @@
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="Cache-Control" content="no-cache">
 <!-- end no cache headers -->
-<title>Login - powered by Easy File Sharing Web Server</title>
+<title>Register - powered by EDMS</title>
 
 <style type="text/css">
 
@@ -25,7 +32,7 @@ body {
 
 /* General font families for common tags */
 font,th,td,p { font-family: Verdana, Arial, Helvetica, sans-serif }
-a:link,a:active,a:visited { color : #006699; }
+a:link,a:active,a:visited { color : ##006699; }
 a:hover		{ text-decoration: underline; color : #587EA5; }
 hr	{ height: 0px; border: solid #E0E7F1 0px; border-top-width: 1px;}
 
@@ -215,78 +222,110 @@ INPUT.button {
 
 </style>
 
-     </head>
+<script language="JavaScript"><!--
+function input(ok)
+{
+   	var M1=ok.frmUserID.value;
+   	if (M1=="")	{
+		alert("User ID is empty!");   
+		return false;
+	}
+   	M1=ok.frmUserPass.value;
+   	if (M1.length<6)	{
+		alert("Password must have at least 6 characters!");   
+		return false;
+	}
+   	if (ok.frmUserPass.value!=ok.frmUserPass2.value)	{
+		alert("The two passwords that you typed do not match!");   
+		return false;
+	}
+   	if (ok.Email.value=="")	{
+		alert("Email is empty!");   
+		return false;
+	}
+        isEmail1=/^\w+([\.\-]\w+)*\@\w+([\.\-]\w+)*\.\w+$/; 
+        isEmail2=/^.*@[^_]*$/; 
+        if(isEmail1.test(ok.Email.value)&&isEmail2.test(ok.Email.value)) {
+        }
+        else
+        {
+            alert("Email is Invalid!");
+            return false;
+        }
+   	return true;
+}
+function onpreview()
+{
+   window.open("/previewavatars.ghp");
+}
+// --></script>
 
-<body bgcolor="#e5e5e5" text="#000000" link="#587ea5" vlink="#587ea5" >
-<%  
-String profile_msg=(String)request.getAttribute("profile_msg");  
-if(profile_msg!=null){  
-out.print(profile_msg);  
-}  
-String login_msg=(String)request.getAttribute("login_msg");  
-if(login_msg!=null){  
-out.print(login_msg);  
-}  
- %>  
+</head>
+
+<body bgcolor="#e5e5e5" text="#000000" link="#587ea5" vlink="#587ea5">
 <a name="top"></a> <br>
 <br>
 <br>
-<form name="login" action="LoginRequest" method="get">
+<form action="UserRegistration"  method="get">
   <input type="hidden" name="frmLogin" value="true">
-  <table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
-    <tbody>
-      <tr> 
-        <td align="left" class="nav">&nbsp;</td>
-      </tr>
-    </tbody>
-  </table>
-  <table width="500"  border="0" align="center" cellpadding="4" cellspacing="1" class="forumline">
-    <tbody>
-      <tr> 
-        <th height="25" class="thHead" nowrap="nowrap">Please enter your username 
-          and password to login</th>
-      </tr>
-      <tr> 
-        <td class="row1"><div align="center">
-            <span class=cattitle>User Login</span> <br>
-            <br>
-          </div>
-          <table border="0" cellpadding="3" cellspacing="1" width="100%">
-            <tbody>
-	      <tr>
-	        <td width="29%" align="right"><span class="gen">Note:</span></td> 	
-		<td width="71%"> <span class="gensmall">Username and Password are case sensitive.</span></td> 
-              </tr>    
-              <tr> 
-                <td width="29%" align="right"><span class="gen">Username:</span></td>
-                <td width="71%"> <input name="frmUserName" type="text" id="frmUserName" tabindex=1 size="25"> 
-                  <span class="gensmall"><a href="register.jsp" class="gensmall">I 
-                  want to register</a></span> </td>
-              </tr>
-              <tr> 
-                <td align="right"><span class="gen">Password:</span></td>
-                <td> <input name="frmUserPass" type="password" id="frmUserPass" tabindex=2 size="25"> 
-                  <span class="gensmall"><a href="/forgot.htm" class="gensmall">I 
-                  forgot my password</a></span> </td>
-              </tr>
-              <tr> 
-                <td align="right">&nbsp; </td>
-                <td> <span class="gensmall"> 
-                  <input type="submit" name="login" class="mainoption" tabindex=3 value="Login!">
-				  <input id="rememberPass" type="checkbox" value="" />Remember me</span>
-                  </td>
-              </tr>
-              <tr> 
-                <td align="right"><span class="gensmall"></span></td>
-                <td> <span class="gensmall"><a href="/vfolder.ghp">login as a guest</a>&nbsp;|&nbsp;<a href="javascript:securelogin()">secure login</a><br>
-                   </span></td>
-              </tr>
-            </tbody>
-          </table></td>
-      </tr>
-    </tbody>
-  </table>
-</form>
-<div align="center"><span class="copyright">Powered by <a href="http://www.sharing-file.com/" class="copyright"><font color="#006699">EDMS </font></a><br>
-  Copyright &copy; 2012 EDMS Software Inc.</span> </div>
+	<TABLE cellSpacing=2 cellPadding=2 width="569" align=center border=0>
+    <TBODY>
+      <TR> 
+        <TD align=left>&nbsp;</TD>
+      </TR>
+    </TBODY>
+  </TABLE>
+  <TABLE width="500" 
+        border=0 align="center" cellPadding=3 cellSpacing=1 class=forumline>
+    <TBODY>
+      <TR> 
+        <TH class=thHead Align=center colSpan=2 height=25>Registration Information</TH>
+      </TR>
+      <TR> 
+        <TD class=row2 colSpan=2><SPAN class=gensmall>Items marked with a * are 
+          required </SPAN></TD>
+      </TR>
+      <TR> 
+        <TD width="38%" class=row1><SPAN class=gen>Username: *</SPAN></TD>
+        <TD class=row2><INPUT name="frmUserID" class="post" id="frmUserID" style="WIDTH: 200px" 
+            size=25 maxLength=40></TD>
+      </TR>
+      <TR> 
+        <TD  class=row1><SPAN class=gen>Password: *</SPAN></TD>
+        <TD class=row2><INPUT name="frmUserPass" type="password" class="post" id="frmUserPass" style="WIDTH: 200px" size=25 
+            maxLength=100></TD>
+      </TR>
+      <TR> 
+        <TD  class=row1><SPAN class=gen>Confirm password: *</SPAN></TD>
+        <TD class=row2><INPUT name="frmUserPass2" type="password" class="post" id="frmUserPass2" style="WIDTH: 200px" size=25 
+            maxLength=100></TD>
+      </TR>
+      <TR> 
+        <TD  class=row1><SPAN class=gen>Email address: *</SPAN></TD>
+        <TD class=row2><INPUT name="email" type="text" class="post" id="Email" style="WIDTH: 200px" 
+            size=25 maxLength=255></TD>
+      </TR>
+      <TR> 
+        <TD  class=row1><SPAN class=gen>Select Avatar from gallery: </SPAN></TD>
+        <TD class=row2><select name="Avatar" style="WIDTH: 100px">               
+          </select>
+          <input name="Preview" type="button" id="Preview" value="Preview" style="WIDTH: 95px" onclick="onpreview();"></TD>
+      </TR>
+      <TR> 
+        <TD  class=row1><SPAN class=gen>Link to off-site Avatar:<br>
+          Enter the URL of the location containing the Avatar image you wish to 
+          link to.</SPAN></TD>
+        <TD class=row2><INPUT name=avatarURL type="text" class=post id="avatarURL" style="WIDTH: 200px" 
+            size=25 maxLength=255></TD>
+      </TR>
+      <TR> 
+        <TD class=catBottom colSpan=2 height=28> <INPUT name=register type=submit class=mainoption id="register" value=Register!> 
+          &nbsp;&nbsp; <INPUT class=liteoption type=reset value=Reset name=reset></TD>
+      </TR>
+    </TBODY>
+  </TABLE>
+</FORM>
+<div align="center"><span class="copyright">Powered by <a href="http://www.sharing-file.com/" class="copyright"><font color="#006699">Easy 
+  File Sharing Web Server</font></a><br>
+  Copyright &copy; 2004 EFS Software Inc.</span> </div>
 </body></html>

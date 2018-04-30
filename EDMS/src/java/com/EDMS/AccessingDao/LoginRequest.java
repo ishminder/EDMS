@@ -1,43 +1,41 @@
-package com.EBMS.AccessingDao;
+package com.EDMS.AccessingDao;
 
-import com.EBMS.Dao.StudentDao;
-import com.KPSCampusCare.bean.Student;
+import com.EDMS.Dao.LoginDao;
+
+import com.EDMS.bean.Login;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Ish
- */
-public class AdminRegistration extends HttpServlet {
+public class LoginRequest extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String admissNo = request.getParameter("admissNo");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        int classId = Integer.parseInt(request.getParameter("classId"));
-        String password = request.getParameter("password");
-        Student s = new Student();
-        s.setName(name);
-        s.setAddress(address);
-        s.setClassId(classId);
-        s.setEmail(email);
-        s.setPassword(password);
-        s.setPhone(phone);
-        s.setAdmiss_no(Integer.parseInt(admissNo));
-        int rowsEffected = StudentDao.register(s);
-        if (rowsEffected > 0) {
-            response.sendRedirect(request.getContextPath() + "/frontpage.jsp");
+        String name = request.getParameter("frmUserName");
+        String password = request.getParameter("frmUserPass");
+        System.out.print(name+" - "+password);
+               
+        Login l = new Login();
+        l.setName(name);
+        l.setPassword(password);
+        
+        int level = LoginDao.loginCheck(l);
+        System.out.print("LoginCheck() called");
+               
+        if (level != 0) {
+            HttpSession session = request.getSession();
+            session.setAttribute("level", level);
+            System.out.println("Successfully loggedin");
+        response.sendRedirect(request.getContextPath() + "/home.jsp");
         } else {
-            System.err.println("No rows Effected!!");
+            request.setAttribute("ErrorLogin", "Incorrect email or password! Please try again.");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
         }
     }
 

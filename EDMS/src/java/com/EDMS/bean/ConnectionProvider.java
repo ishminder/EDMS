@@ -1,7 +1,7 @@
-package com.EBMS.bean;
+package com.EDMS.bean;
 
 import java.sql.Connection;
-import static com.EBMS.bean.Provider.*;
+import static com.EDMS.bean.Provider.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
