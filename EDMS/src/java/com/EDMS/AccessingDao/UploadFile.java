@@ -1,68 +1,48 @@
 package com.EDMS.AccessingDao;
 
-import com.EDMS.Dao.PfolderDao;
-import com.EDMS.bean.Pfolder;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.oreilly.servlet.MultipartRequest;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
  * @author Ish
  */
-public class CreateDir extends HttpServlet {
-    
+public class UploadFile extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String path = request.getParameter("path");
-        String dirname = request.getParameter("dirname");
-         String description = request.getParameter("description");
-       try{
-    String strDirectoy =dirname;
 
-    // Create one directory
-    boolean success = (new File(path+strDirectoy)).mkdir();
-    if (success) {
-      System.out.println("Directory: " + strDirectoy + " created");
-       
-      Pfolder p=new Pfolder();
-        p.setName(dirname);
-        p.setPath(path+dirname);
-        p.setDescription(description);
+        PrintWriter out = response.getWriter();
+        HttpSession sessfile = request.getSession();
+       System.out.print("Session v= "+sessfile.getAttribute("path"));
+
+//Object file_path =request.getAttribute("path");
+        String file_name = request.getParameter("name");
+
+        String file_path = String.valueOf(sessfile.getAttribute("path"));
+        System.out.print("path = " + file_path);
+        MultipartRequest m = new MultipartRequest(request, file_path);
+        out.print("successfully uploaded");
         
-        int rowsEff=PfolderDao.register(p);
-        System.out.println("Registered!!\n"); 
-        if (rowsEff > 0)
-        {
-         System.out.println("rows Effected!!"+rowsEff);
-        }
-          else 
-        {
-            System.err.println("No rows Effected!!"); 
-        }
-    }    
 
+        RequestDispatcher rd = request.getRequestDispatcher("viewFiles.jsp?name=" +sessfile.getAttribute("path") );
+        rd.forward(request, response);
 
-  
+    }
+
          // Create multiple directories
     /*success = (new File(strManyDirectories)).mkdirs();
-    if (success) {
-      System.out.println("Directories: " + strManyDirectories + " created");
-    }*/
-
-    }catch (Exception e){//Catch exception if any
-      System.err.println("Error: " + e.getMessage());
-    }
-       System.out.println("Successfully created directory");
-       response.sendRedirect(request.getContextPath()+"/home.jsp");
-       
-    }
-
+     if (success) {
+     System.out.println("Directories: " + strManyDirectories + " created");
+     }*/
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

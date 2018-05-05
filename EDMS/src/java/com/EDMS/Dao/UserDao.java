@@ -40,7 +40,7 @@ public class UserDao {
         return rowsEff;
     }
 
-    public static List<Parents> parentsReport() {
+    public static List<Parents> UserReport() {
         Connection con = null;
 
         List<Parents> parentList = new ArrayList<>();
@@ -78,7 +78,7 @@ public class UserDao {
         return parentList;
     }
 
-    public static Parents parentsDetails(String name) {
+    public static Parents UserDetails(String name) {
         Connection con = null;
         Parents p = new Parents();
 
