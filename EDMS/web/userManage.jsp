@@ -1,13 +1,11 @@
 <%-- 
-    Document   : viewFiles
-    Created on : 5 May, 2018, 5:27:07 PM
+    Document   : createPf
+    Created on : 6 May, 2018, 5:37:16 PM
     Author     : Ish
 --%>
-
-<%@page import="com.EDMS.Dao.FilesDao"%>
-<%@page import="com.EDMS.bean.Files"%>
 <%@page import="java.util.List"%>
-<%@page import="javax.servlet.http.HttpSession"%>
+<%@page import="com.EDMS.Dao.UserDao"%>
+<%@page import="com.EDMS.bean.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,28 +40,15 @@
                 padding: 15px;
             }
 
-            /* On small screens, set height to 'auto' for sidenav and grid */
-            @media screen and (max-width: 767px) {
-                .sidenav {
-                    height: auto;
-                    padding: 15px;
-                }
-                .row.content {height:auto;} 
-            }
+
         </style>
     </head>
     <body>
         <%
-            String file_name = request.getParameter("name");
-            request.setAttribute("path", file_name);
-
-            HttpSession sessfile = request.getSession();
-            sessfile.setAttribute("path", file_name);
-            System.out.print("Executing List<>files");
-
-            List<Files> file_List = FilesDao.view_files();
-
-
+            List<User> userlist = UserDao.allUsers();
+            if (userlist.isEmpty()) {
+                System.out.print("Userlist is empty");
+            } else {
         %>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -77,10 +62,10 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li ><a href="home.jsp">Home</a></li>
-                        <li><a href="home.jsp">Virtual Folders</a></li>
-                        <li class="active"><a href="#">Files</a></li>
-                        <li><a href="#">Admin tools</a></li>
+                        <li ><a href="#">Home</a></li>
+                        <li ><a href="home.jsp">Virtual Folders</a></li>
+                        <li ><a href="#">Files</a></li>
+                        <li class="active"><a href="#">User Management</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
@@ -92,33 +77,38 @@
         <div class="container-fluid text-center">    
             <div class="row content">
                 <div class="col-sm-2 sidenav">
-                    <p><a href="uploadFile.jsp">Upload File</a></p>
-                    <p><a href="uploadFile.jsp">Download File</a></p>
-
+                    <p><a href="home.jsp">User Management</a></p>
+                    <p><a href="home.jsp">Manage Virtual Folders</a></p>
                 </div>
                 <div class="col-sm-8 text-left"> 
-                    <h1>Files</h1>
-                    <p>Files with their description</p>
+                    <h1>User Management</h1>
+                    <p>Modify User Details</p>
                     <hr>
-                    <h3>Files</h3>
+                    <h3>All Users</h3>
                     <table >
                         <tr>
-                            <th>Download</th>
-                            <th >Name</th>
-                            <th>Description</th>
-                            <th>Author</th>
+                            <th >User Id</th>
+                            <th>Password</th>
+                            <th>Email</th>
+                            <th>Level</th>
+                            <th>Enable</th>
                         </tr>
-                        <%              for (Files p : file_List) {
+                        <%
+                            for (User u : userlist) {
+                                int id = 0;
+                                ++id;
                         %>
                         <tr>
-                            <td><input type="checkbox" name="download" /></td>
-                            <td><a href=""><%=p.getName()%></a></td>
-                            <td><%=p.getDescription()%></td>
-                            <td><%=p.getAuthor()%></td>
-
+                           
+                            <td><input  type="text" name ="userid<%=id%>" value="<%=u.getUserid()%>"/></td>
+                            <td><input  type="password" name ="password<%=id%>" value="<%=u.getPasswd()%>"/></td>
+                            <td><input  type="text" name ="email<%=id%>" value="<%=u.getEmail()%>"/></td>
+                            <td><input  type="text" name ="level<%=id%>" value="<%=u.getLevel()%>"/></td>
+                            <td><input  type="text" name ="enable<%=id%>" value="<%=u.getEnable()%>"/></td>
                         </tr>
-                        <%              }
-
+                        <%              
+                                }
+                            }
                         %>
                     </table>
                 </div>
@@ -139,4 +129,3 @@
 
     </body>
 </html>
-

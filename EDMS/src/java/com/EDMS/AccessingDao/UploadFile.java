@@ -10,27 +10,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Ish
  */
+
 public class UploadFile extends HttpServlet {
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         PrintWriter out = response.getWriter();
         HttpSession sessfile = request.getSession();
         System.out.print("Session v= " + sessfile.getAttribute("path"));
 
         //Object file_path =request.getAttribute("path");
         String file_name = request.getParameter("fname");
-        String description = request.getParameter("description");
+        String description =request.getParameter("description");
         String file_path = String.valueOf(sessfile.getAttribute("path"));
-        System.out.print("path = " + file_path);
+        System.out.print("filename = " + file_name + "Description = " + description + "path = " + file_path);
         MultipartRequest m = new MultipartRequest(request, file_path);
         out.print("successfully uploaded");
         Files f = new Files();
@@ -46,7 +51,7 @@ public class UploadFile extends HttpServlet {
         System.out.print("running Request dispatcher");
         RequestDispatcher rd = request.getRequestDispatcher("viewFiles.jsp?name=" + sessfile.getAttribute("path"));
         rd.forward(request, response);
-        
+
     }
 
          // Create multiple directories
@@ -93,4 +98,5 @@ public class UploadFile extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+   
 }

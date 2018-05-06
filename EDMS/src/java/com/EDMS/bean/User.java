@@ -13,6 +13,8 @@ public class User {
     private String userid;
     private String passwd;
     private String email;
+    private int level;
+    private int enable; 
   
     /**
      * @return the userid
@@ -54,6 +56,34 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * @return the level
+     */
+    public int getLevel() {
+        return level;
+    }
+
+    /**
+     * @param level the level to set
+     */
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    /**
+     * @return the enable
+     */
+    public int getEnable() {
+        return enable;
+    }
+
+    /**
+     * @param enable the enable to set
+     */
+    public void setEnable(int enable) {
+        this.enable = enable;
     }
     
 }

@@ -21,7 +21,8 @@ public class UserDao {
             ps.setString(1, u.getUserid());
             ps.setString(2, u.getPasswd());
             ps.setString(3, u.getEmail());
-           
+            ps.setInt(4, u.getLevel());
+            ps.setInt(5, u.getEnable());
             rowsEff = ps.executeUpdate();
             System.out.println("Executed Update //UserDao!!\n");
         } catch (Exception e) {
@@ -40,18 +41,23 @@ public class UserDao {
         return rowsEff;
     }
 
-    public static List<User> UserReport() {
+    public static List<User> allUsers() {
         Connection con = null;
 
-        List<User> parentList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
         try {
             con = ConnectionProvider.getCon();
-            PreparedStatement ps = con.prepareStatement("select * from parents ");
+            PreparedStatement ps = con.prepareStatement("select * from user");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User p = new User();
-               
+                User u = new User();
+                u.setUserid(rs.getString(2));
+                u.setPasswd(rs.getString(3));
+                u.setEmail(rs.getString(4));
+                u.setLevel(rs.getInt(5));
+                u.setEnable(rs.getInt(6));
+                userList.add(u);
             }
 
         } catch (Exception e) {
@@ -67,7 +73,7 @@ public class UserDao {
             }
 
         }
-        return parentList;
+        return userList;
     }
 
     public static User UserDetails(String name) {
@@ -81,8 +87,6 @@ public class UserDao {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-
-                
 
             } else {
                 System.err.println("name = " + name + " in parentsDAo");

@@ -1,13 +1,8 @@
 <%-- 
-    Document   : viewFiles
-    Created on : 5 May, 2018, 5:27:07 PM
+    Document   : createPf
+    Created on : 6 May, 2018, 5:37:16 PM
     Author     : Ish
 --%>
-
-<%@page import="com.EDMS.Dao.FilesDao"%>
-<%@page import="com.EDMS.bean.Files"%>
-<%@page import="java.util.List"%>
-<%@page import="javax.servlet.http.HttpSession"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,18 +48,7 @@
         </style>
     </head>
     <body>
-        <%
-            String file_name = request.getParameter("name");
-            request.setAttribute("path", file_name);
 
-            HttpSession sessfile = request.getSession();
-            sessfile.setAttribute("path", file_name);
-            System.out.print("Executing List<>files");
-
-            List<Files> file_List = FilesDao.view_files();
-
-
-        %>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -77,9 +61,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li ><a href="home.jsp">Home</a></li>
-                        <li><a href="home.jsp">Virtual Folders</a></li>
-                        <li class="active"><a href="#">Files</a></li>
+                        <li ><a href="#">Home</a></li>
+                        <li class="active"><a href="home.jsp">Virtual Folders</a></li>
+                        <li ><a href="#">Files</a></li>
                         <li><a href="#">Admin tools</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -92,35 +76,33 @@
         <div class="container-fluid text-center">    
             <div class="row content">
                 <div class="col-sm-2 sidenav">
-                    <p><a href="uploadFile.jsp">Upload File</a></p>
-                    <p><a href="uploadFile.jsp">Download File</a></p>
-
+                    <p><a href="home.jsp">View Virtual Folders</a></p>
+                    <p><a href="home.jsp">Manage Virtual Folders</a></p>
                 </div>
                 <div class="col-sm-8 text-left"> 
-                    <h1>Files</h1>
-                    <p>Files with their description</p>
+                    <h1>Create Virtual Folder</h1>
+                    <p>Please provide details for creating Virtual Folder at your  desired location</p>
                     <hr>
-                    <h3>Files</h3>
-                    <table >
-                        <tr>
-                            <th>Download</th>
-                            <th >Name</th>
-                            <th>Description</th>
-                            <th>Author</th>
-                        </tr>
-                        <%              for (Files p : file_List) {
-                        %>
-                        <tr>
-                            <td><input type="checkbox" name="download" /></td>
-                            <td><a href=""><%=p.getName()%></a></td>
-                            <td><%=p.getDescription()%></td>
-                            <td><%=p.getAuthor()%></td>
-
-                        </tr>
-                        <%              }
-
-                        %>
-                    </table>
+                    <h2></h2>
+                    <form action="CreateDir" method="post">
+                        <table style="text-align: left">
+                            <tr>
+                                <th>Directory name</th>
+                                <td> <input type="text" name="dirname"/></td>
+                            </tr>
+                            <tr>
+                                <th>Enter Path to Create new directory</th>
+                                <td><input type="text" name="path"/></td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td><input type="text" name="description"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="submit"/></td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
                 <div class="col-sm-2 sidenav">
                     <div class="well">
@@ -139,4 +121,3 @@
 
     </body>
 </html>
-

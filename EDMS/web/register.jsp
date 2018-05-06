@@ -32,7 +32,7 @@ body {
 
 /* General font families for common tags */
 font,th,td,p { font-family: Verdana, Arial, Helvetica, sans-serif }
-a:link,a:active,a:visited { color : ##006699; }
+a:link,a:active,a:visited { color : #006699 }
 a:hover		{ text-decoration: underline; color : #587EA5; }
 hr	{ height: 0px; border: solid #E0E7F1 0px; border-top-width: 1px;}
 
@@ -325,7 +325,7 @@ function onpreview()
     </TBODY>
   </TABLE>
 </FORM>
-<div align="center"><span class="copyright">Powered by <a href="http://www.sharing-file.com/" class="copyright"><font color="#006699">Easy 
+<div align="center"><span class="copyright">Powered by <a href="http://www.EDMS.com/" class="copyright"><font color="#006699">Easy 
   File Sharing Web Server</font></a><br>
   Copyright &copy; 2004 EFS Software Inc.</span> </div>
 </body></html>

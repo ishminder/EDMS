@@ -1,18 +1,17 @@
 <%-- 
-    Document   : viewFiles
-    Created on : 5 May, 2018, 5:27:07 PM
+    Document   : uploadFile
+    Created on : 6 May, 2018, 5:01:18 PM
     Author     : Ish
 --%>
 
-<%@page import="com.EDMS.Dao.FilesDao"%>
-<%@page import="com.EDMS.bean.Files"%>
 <%@page import="java.util.List"%>
-<%@page import="javax.servlet.http.HttpSession"%>
+<%@page import="com.EDMS.bean.Pfolder"%>
+<%@page import="com.EDMS.Dao.PfolderDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Bootstrap Example</title>
+        <title>EDMS</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -54,15 +53,8 @@
     </head>
     <body>
         <%
-            String file_name = request.getParameter("name");
-            request.setAttribute("path", file_name);
-
             HttpSession sessfile = request.getSession();
-            sessfile.setAttribute("path", file_name);
-            System.out.print("Executing List<>files");
-
-            List<Files> file_List = FilesDao.view_files();
-
+            String path = String.valueOf(sessfile.getAttribute("path"));
 
         %>
         <nav class="navbar navbar-inverse">
@@ -77,7 +69,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li ><a href="home.jsp">Home</a></li>
+                        <li ><a href="#">Home</a></li>
                         <li><a href="home.jsp">Virtual Folders</a></li>
                         <li class="active"><a href="#">Files</a></li>
                         <li><a href="#">Admin tools</a></li>
@@ -92,35 +84,30 @@
         <div class="container-fluid text-center">    
             <div class="row content">
                 <div class="col-sm-2 sidenav">
-                    <p><a href="uploadFile.jsp">Upload File</a></p>
-                    <p><a href="uploadFile.jsp">Download File</a></p>
+                    <p><a href="viewFiles.jsp?name=<%=path%>">View Files</a></p>
+                    <p><a href="#">Manage Files</a></p>
 
                 </div>
                 <div class="col-sm-8 text-left"> 
-                    <h1>Files</h1>
-                    <p>Files with their description</p>
+                    <h1>Upload File</h1>
+                    <p>Select File from below tag and provide description</p>
                     <hr>
-                    <h3>Files</h3>
-                    <table >
-                        <tr>
-                            <th>Download</th>
-                            <th >Name</th>
-                            <th>Description</th>
-                            <th>Author</th>
-                        </tr>
-                        <%              for (Files p : file_List) {
-                        %>
-                        <tr>
-                            <td><input type="checkbox" name="download" /></td>
-                            <td><a href=""><%=p.getName()%></a></td>
-                            <td><%=p.getDescription()%></td>
-                            <td><%=p.getAuthor()%></td>
-
-                        </tr>
-                        <%              }
-
-                        %>
-                    </table>
+                    <h3>Test</h3>
+                    <form action="UploadFile" method="post" enctype="multipart/form-data">  
+                        <table>
+                            <tr>
+                                <th>Select File:</th>
+                                <td><input type="file" name="fname"/></td>
+                            </tr>
+                            <tr>
+                                <th>Description:</th>
+                                <td><input type="text" name="description" /></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="upload"/></td>
+                            </tr>
+                        </table> 
+                    </form>  
                 </div>
                 <div class="col-sm-2 sidenav">
                     <div class="well">
@@ -139,4 +126,3 @@
 
     </body>
 </html>
-
