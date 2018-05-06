@@ -41,16 +41,24 @@ public class UserDao {
         return rowsEff;
     }
 
+<<<<<<< HEAD
     public static List<User> allUsers() {
         Connection con = null;
 
         List<User> userList = new ArrayList<>();
+=======
+    public static List<Parents> parentsReport() {
+        Connection con = null;
+
+        List<Parents> parentList = new ArrayList<>();
+>>>>>>> parent of 2aed2ee... Merge branch 'master' of https://github.com/ishminder/EDMS
         try {
             con = ConnectionProvider.getCon();
             PreparedStatement ps = con.prepareStatement("select * from user");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+<<<<<<< HEAD
                 User u = new User();
                 u.setUserid(rs.getString(2));
                 u.setPasswd(rs.getString(3));
@@ -58,6 +66,18 @@ public class UserDao {
                 u.setLevel(rs.getInt(5));
                 u.setEnable(rs.getInt(6));
                 userList.add(u);
+=======
+                Parents p = new Parents();
+                p.setFather_name(rs.getString(2));
+                p.setMother_name(rs.getString(3));
+                p.setEmail_id(rs.getString(4));
+                p.setPhone(rs.getString(5));
+                p.setStudent_id(rs.getInt(6));
+                p.setPassword(rs.getString(7));
+                p.setAddress(rs.getString(8));
+                p.setUserName(rs.getString(9));
+                parentList.add(p);
+>>>>>>> parent of 2aed2ee... Merge branch 'master' of https://github.com/ishminder/EDMS
             }
 
         } catch (Exception e) {
@@ -76,9 +96,9 @@ public class UserDao {
         return userList;
     }
 
-    public static User UserDetails(String name) {
+    public static Parents parentsDetails(String name) {
         Connection con = null;
-        User p = new User();
+        Parents p = new Parents();
 
         try {
             con = ConnectionProvider.getCon();
@@ -88,6 +108,18 @@ public class UserDao {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
 
+<<<<<<< HEAD
+=======
+                p.setFather_name(rs.getString(2));
+                p.setMother_name(rs.getString(3));
+                p.setEmail_id(rs.getString(4));
+                p.setPhone(rs.getString(5));
+                p.setStudent_id(rs.getInt(6));
+                p.setPassword(rs.getString(7));
+                p.setAddress(rs.getString(8));
+                p.setUserName(rs.getString(9));
+
+>>>>>>> parent of 2aed2ee... Merge branch 'master' of https://github.com/ishminder/EDMS
             } else {
                 System.err.println("name = " + name + " in parentsDAo");
             }

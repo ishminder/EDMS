@@ -32,7 +32,7 @@ public class CreateDir extends HttpServlet {
        
       Pfolder p=new Pfolder();
         p.setName(dirname);
-        p.setPath(path+dirname);
+        p.setPath(path);
         p.setDescription(description);
         
         int rowsEff=PfolderDao.register(p);

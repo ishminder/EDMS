@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@page import="com.EDMS.bean.Pfolder"%>
 <%@page import="com.EDMS.Dao.PfolderDao"%>
 <%@page import="java.util.List"%>
@@ -45,15 +46,17 @@
             }
         </style>
     </head>
+=======
+<html>
+    <head></head>
+>>>>>>> parent of 2aed2ee... Merge branch 'master' of https://github.com/ishminder/EDMS
     <body>
         <%
-            String level = null;
-            HttpSession sess = request.getSession();
-            level = String.valueOf(sess.getAttribute("level"));
-
-            List<Pfolder> pfolderList = PfolderDao.view_pfolder();
-
+            String level=null;
+        HttpSession sess=request.getSession();
+       level = String.valueOf(sess.getAttribute("level"));
         %>
+<<<<<<< HEAD
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -121,5 +124,15 @@
             <p>2018 &copy; EDMS</p>
         </footer>
 
+=======
+        <h1>Welcome to EDMS Level=<%=level%></h1>
+        <form action="CreateDir" method="post">
+        Directory name
+            <input type="text" name="dirname"/>
+            Enter Path to Create new directory
+        <input type="text" name="path"/>
+        <input type="submit" value="submit"/>
+        </form>
+>>>>>>> parent of 2aed2ee... Merge branch 'master' of https://github.com/ishminder/EDMS
     </body>
 </html>
