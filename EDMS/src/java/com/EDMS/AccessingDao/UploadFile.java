@@ -1,46 +1,59 @@
 package com.EDMS.AccessingDao;
 
-import com.EBMS.Dao.StudentDao;
-import com.KPSCampusCare.bean.Student;
+import com.EDMS.bean.Files;
+import com.EDMS.Dao.FilesDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.oreilly.servlet.MultipartRequest;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
  * @author Ish
  */
-public class AdminRegistration extends HttpServlet {
-
+public class UploadFile extends HttpServlet {
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String admissNo = request.getParameter("admissNo");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        int classId = Integer.parseInt(request.getParameter("classId"));
-        String password = request.getParameter("password");
-        Student s = new Student();
-        s.setName(name);
-        s.setAddress(address);
-        s.setClassId(classId);
-        s.setEmail(email);
-        s.setPassword(password);
-        s.setPhone(phone);
-        s.setAdmiss_no(Integer.parseInt(admissNo));
-        int rowsEffected = StudentDao.register(s);
-        if (rowsEffected > 0) {
-            response.sendRedirect(request.getContextPath() + "/frontpage.jsp");
+        
+        PrintWriter out = response.getWriter();
+        HttpSession sessfile = request.getSession();
+        System.out.print("Session v= " + sessfile.getAttribute("path"));
+
+        //Object file_path =request.getAttribute("path");
+        String file_name = request.getParameter("fname");
+        String description = request.getParameter("description");
+        String file_path = String.valueOf(sessfile.getAttribute("path"));
+        System.out.print("path = " + file_path);
+        MultipartRequest m = new MultipartRequest(request, file_path);
+        out.print("successfully uploaded");
+        Files f = new Files();
+        f.setName(file_path + file_name);
+        f.setDescription(description);
+        int rowseff = FilesDao.register(f);
+        System.out.println("Registered!!\n");
+        if (rowseff > 0) {
+            System.out.println("rows Effected!!" + rowseff);
         } else {
             System.err.println("No rows Effected!!");
         }
+        System.out.print("running Request dispatcher");
+        RequestDispatcher rd = request.getRequestDispatcher("viewFiles.jsp?name=" + sessfile.getAttribute("path"));
+        rd.forward(request, response);
+        
     }
 
+         // Create multiple directories
+    /*success = (new File(strManyDirectories)).mkdirs();
+     if (success) {
+     System.out.println("Directories: " + strManyDirectories + " created");
+     }*/
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
