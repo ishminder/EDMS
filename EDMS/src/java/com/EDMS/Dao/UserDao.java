@@ -40,26 +40,18 @@ public class UserDao {
         return rowsEff;
     }
 
-    public static List<Parents> UserReport() {
+    public static List<User> UserReport() {
         Connection con = null;
 
-        List<Parents> parentList = new ArrayList<>();
+        List<User> parentList = new ArrayList<>();
         try {
             con = ConnectionProvider.getCon();
             PreparedStatement ps = con.prepareStatement("select * from parents ");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Parents p = new Parents();
-                p.setFather_name(rs.getString(2));
-                p.setMother_name(rs.getString(3));
-                p.setEmail_id(rs.getString(4));
-                p.setPhone(rs.getString(5));
-                p.setStudent_id(rs.getInt(6));
-                p.setPassword(rs.getString(7));
-                p.setAddress(rs.getString(8));
-                p.setUserName(rs.getString(9));
-                parentList.add(p);
+                User p = new User();
+               
             }
 
         } catch (Exception e) {
@@ -78,9 +70,9 @@ public class UserDao {
         return parentList;
     }
 
-    public static Parents UserDetails(String name) {
+    public static User UserDetails(String name) {
         Connection con = null;
-        Parents p = new Parents();
+        User p = new User();
 
         try {
             con = ConnectionProvider.getCon();
@@ -90,14 +82,7 @@ public class UserDao {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
 
-                p.setFather_name(rs.getString(2));
-                p.setMother_name(rs.getString(3));
-                p.setEmail_id(rs.getString(4));
-                p.setPhone(rs.getString(5));
-                p.setStudent_id(rs.getInt(6));
-                p.setPassword(rs.getString(7));
-                p.setAddress(rs.getString(8));
-                p.setUserName(rs.getString(9));
+                
 
             } else {
                 System.err.println("name = " + name + " in parentsDAo");

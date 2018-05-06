@@ -1,5 +1,7 @@
 package com.EDMS.AccessingDao;
 
+import com.EDMS.bean.Files;
+import com.EDMS.Dao.FilesDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,27 +17,36 @@ import javax.servlet.RequestDispatcher;
  * @author Ish
  */
 public class UploadFile extends HttpServlet {
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         PrintWriter out = response.getWriter();
         HttpSession sessfile = request.getSession();
-       System.out.print("Session v= "+sessfile.getAttribute("path"));
+        System.out.print("Session v= " + sessfile.getAttribute("path"));
 
-//Object file_path =request.getAttribute("path");
-        String file_name = request.getParameter("name");
-
+        //Object file_path =request.getAttribute("path");
+        String file_name = request.getParameter("fname");
+        String description = request.getParameter("description");
         String file_path = String.valueOf(sessfile.getAttribute("path"));
         System.out.print("path = " + file_path);
         MultipartRequest m = new MultipartRequest(request, file_path);
         out.print("successfully uploaded");
-        
-
-        RequestDispatcher rd = request.getRequestDispatcher("viewFiles.jsp?name=" +sessfile.getAttribute("path") );
+        Files f = new Files();
+        f.setName(file_path + file_name);
+        f.setDescription(description);
+        int rowseff = FilesDao.register(f);
+        System.out.println("Registered!!\n");
+        if (rowseff > 0) {
+            System.out.println("rows Effected!!" + rowseff);
+        } else {
+            System.err.println("No rows Effected!!");
+        }
+        System.out.print("running Request dispatcher");
+        RequestDispatcher rd = request.getRequestDispatcher("viewFiles.jsp?name=" + sessfile.getAttribute("path"));
         rd.forward(request, response);
-
+        
     }
 
          // Create multiple directories

@@ -26,7 +26,7 @@ public class FilesDao {
         try {
             con = ConnectionProvider.getCon();
             System.out.println("Going to run insert command\n");
-            PreparedStatement ps = con.prepareStatement("insert into files(name,description,author) values(?,?,?,122);");
+            PreparedStatement ps = con.prepareStatement("insert into files(name,description,author) values(?,?,?);");
             ps.setString(1, f.getName());
             ps.setString(2, f.getDescription());
             ps.setString(3, f.getAuthor());
@@ -49,14 +49,14 @@ public class FilesDao {
         return rowsEff;
     }
 
-    public static List<Files> view_files(String name) {
+    public static List<Files> view_files() {
         Connection con = null;
 
         List<Files> files_list = new ArrayList<>();
         try {
             con = ConnectionProvider.getCon();
-            PreparedStatement ps = con.prepareStatement("select * from files where name=?");
-            ps.setString(1, name);
+            PreparedStatement ps = con.prepareStatement("select * from files");
+          
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Files f = new Files();

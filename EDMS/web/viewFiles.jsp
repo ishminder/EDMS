@@ -21,16 +21,19 @@
             request.setAttribute("path", file_name);
               
        HttpSession sessfile=request.getSession();
-        sessfile.setAttribute("path",file_name);  
-            System.out.print("file name = " + file_name);
+        sessfile.setAttribute("path",file_name);
+        System.out.print("Executing List<>files");
             
-            List<Files> file_List = FilesDao.view_files(file_name);
+            List<Files> file_List = FilesDao.view_files();
+           
+           
         %>
         <h2>Upload Files</h2>
         <form action="UploadFile" method="post" enctype="multipart/form-data">  
             Select File:<input type="file" name="fname"/><br/>  
-          
+            Description: <input type="text" name="description" />
             <input type="submit" value="upload"/>  
+            
         </form>  
         <h2>Files</h2>
         <table >
@@ -38,7 +41,7 @@
                 <th >Name</th>
                 <th>Description</th>
             </tr>
-            <%                 for (Files p : file_List) {
+            <%              for (Files p : file_List) {
             %>
             <tr>
                 <td><a href=""><%=p.getName()%></a></td>
@@ -47,6 +50,7 @@
 
             </tr>
             <%              }
+           
             %>
         </table>
     </body>
